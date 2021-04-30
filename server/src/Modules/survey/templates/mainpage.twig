@@ -1,0 +1,36 @@
+<style>
+{{ include('css/main.css') }}
+</style>
+
+<div class="mx-auto col-md-8 col-lg-6">
+    <header class="d-flex justify-content-between align-items-center mb-5 flex-sm-row flex-column">
+        <h1>Sondages</h1>
+        <button class="module_click btn btn-primary" data-action='buttonPressed' data-more='ask'>Poser une question</button>
+    </header>
+    {% if error is defined %}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        {{error}}
+    </div>
+    {% endif %}
+    <div>
+    {% for key, survey in surveys %}
+        <form class="card module_submit mb-5" action="newAnswer">
+            <input type="hidden" name="survey_id" value="{{ key }}" />
+            <div class="card-header d-flex justify-content-between align-items-center">
+                {{survey.question}}
+                {% if survey.editor == user.id %}<button type="button" class="module_click btn btn-outline-danger btn-sm" data-action="deleteQuestion" data-more="{{ key }}"><i class="far fa-trash-alt"></i></button>{% endif %}
+            </div>
+            <div class="list-group list-group-flush">
+                {% if survey.multiple %}
+                    {{ include('includes/multiplechoice.twig') }}
+                {% else %}
+                    {{ include('includes/uniquechoice.twig') }}
+                {% endif %}
+            </div>
+            <div class="card-body">
+                <button class="btn btn-primary float-right">Valider</button>
+            </div>
+        </form>
+    {% endfor %}
+    </div>
+</div>

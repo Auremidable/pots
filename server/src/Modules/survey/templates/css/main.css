@@ -1,0 +1,30 @@
+input:hover, input:focus {
+    -webkit-appearance: radio;
+}
+
+.label_choice {
+    cursor: pointer;
+    color: black;
+    user-select: none;
+}
+
+.label_choice_disabled {
+    cursor: pointer;
+    color: grey;
+    user-select: none;
+    text-decoration: line-through;
+}
+
+.survey_item {
+    position: relative;
+}
+
+.survey_item::after {
+    content: attr(data-count) " / " attr(data-total);
+    position: absolute;
+    bottom: 0px;
+    right: 5px;
+    color: grey;
+    font-style: italic;
+    font-size: 0.9em;
+}

@@ -1,0 +1,9 @@
+FROM node:12.13.0
+
+ADD ./client /app
+
+WORKDIR /app
+
+RUN npm install
+
+CMD [ "sh", "start.sh" ]

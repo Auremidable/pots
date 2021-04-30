@@ -1,0 +1,41 @@
+<style>
+{{ include('css/newquestion.css') }}
+</style>
+
+<div class="mx-auto col-md-8 col-lg-6 align-self-center">
+    <button class="btn btn-link module_click" data-action="mainPage">Retour</button>
+    <h1>Poser une question</h1>
+    <form action="newQuestion" class="module_submit survey_form">
+        {% if error is defined %}
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{error}}
+        </div>
+        {% endif %}
+        <div class="survey_header">
+            <input type="text" name="question" placeholder='Votre question ...' required/>
+        </div>
+        <div class="survey_body">
+            {% for i in 1..5 %}
+            <div class='survey_suggestion'>
+                <div class="survey_suggestion_field">
+                    <input type="text" name="suggestion_{{i}}" id="suggestion_{{i}}" placeholder='Suggestion {{i}}...'/>
+                </div>
+                <div class="survey_suggestion_quota">
+                    <label for="quota_{{i}}" title="Détermine le nombre d'invités pouvant sélectionner ce choix. Saissiez 0 si pas de quota.">Quota</label>
+                    <input type="number" name="quota_{{i}}" id="quota_{{i}}" min="0" value="0"/>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="survey_body">
+            <p>
+                Plusieurs choix possible ? 
+                <label for="multiple_y">oui</label> <input type="radio" name="multiple" value="y" id="multiple_y"/>
+                <label for="multiple_n">non </label> <input type="radio" name="multiple" value="n" checked id="multiple_n" />
+            </p>
+        </div>
+        <div class="survey_footer">
+            <button type="submit" class="btn btn-primary">Demander</button>
+        </div>
+    </form>
+</div>

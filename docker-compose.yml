@@ -1,0 +1,53 @@
+version: "3"
+
+services:
+    mysql:
+        image: mysql
+        command: ['--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci', '--default-authentication-plugin=mysql_native_password']
+        environment: 
+            MYSQL_DATABASE: pots
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_USER: admin
+            MYSQL_PASSWORD: 16%!5EJwz
+        ports:
+            - 3306:3306
+        volumes: 
+            - mysql:/var/lib/mysql
+    server:
+        build:
+            context: .
+            dockerfile: ./docker/dockerfile-server
+        environment: 
+            APP_ENV: dev
+            DATABASE_URL: mysql://admin:16%!5EJwz@mysql:3306/pots?serverVersion=5.7
+        ports: 
+            - 5000:8000
+        volumes: 
+            - ./server/:/app/
+        depends_on: 
+            - mysql
+    
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        restart: always
+        environment: 
+            MYSQL_USER: admin
+            MYSQL_PASSWORD: 16%!5EJwz
+            PMA_HOST: mysql
+            PMA_PORT: 3306
+        ports:
+            - 5001:80
+
+    client:
+        build: 
+            context: .
+            dockerfile: ./docker/dockerfile-client
+        ports: 
+            - 80:3000
+        environment: 
+            CI: "true"
+        volumes:
+            - ./client:/app/
+
+volumes:
+    mysql:

@@ -1,0 +1,26 @@
+FROM php:7-fpm-stretch
+
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+            git \
+            zlib1g-dev \
+            libxml2-dev \
+            libzip-dev \
+            wget \
+        && docker-php-ext-install \
+            zip \
+            intl \
+            mysqli \
+            pdo pdo_mysql \
+    && curl -sS https://getcomposer.org/installer | php \
+    && mv composer.phar /usr/local/bin/composer \ 
+    && wget https://get.symfony.com/cli/installer -O - | bash \
+    && mv /root/.symfony/bin/symfony /usr/local/bin/symfony
+
+COPY server/ /app
+
+WORKDIR /app
+
+RUN composer install
+
+CMD ["sh", "start.sh"]

@@ -1,0 +1,14 @@
+{% for suggestion in survey.suggestions %}
+    {% set disabled = suggestion.quota != 0 and suggestion.participants|length >= suggestion.quota %}
+    {% set total = suggestion.quota != 0 ? suggestion.quota : "∞" %}
+    {% set hasVoted = false %}
+    {% for id_participant in suggestion.participants %}
+        {% if id_participant == user.id %}
+            {% set hasVoted = true %}
+        {% endif %}
+    {% endfor %}
+    <div class="list-group-item survey_item {% if disabled and hasVoted == false %}disabled{% endif %}" data-total="{{ total }}" data-count="{{ suggestion.participants|length }}">
+        <input type="radio" name="selected_suggestion" value="{{suggestion.position}}" id="{{suggestion.position}}" {% if disabled and hasVoted == false %}disabled{% endif %} {% if hasVoted %}checked{% endif %}/>
+        <label for="{{suggestion.position}}" class="label_choice{% if disabled and hasVoted == false %}_disabled{% endif %}">{{suggestion.content}}</label>
+    </div>
+{% endfor %}

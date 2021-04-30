@@ -1,0 +1,51 @@
+input[type="text"], input[type="number"] {
+    padding: 5px 10px;
+}
+
+input[name="question"] {
+    margin-bottom: 10px;
+}
+
+input[type="radio"]:hover, input[type="radio"]:focus {
+    -webkit-appearance: radio;
+}
+
+label[title*=" "] {
+    text-decoration: underline dotted;
+    cursor: help;
+}
+
+.survey_form {
+    margin-top: 50px;
+}
+
+.survey_header {
+    width: 100%;
+}
+
+.survey_body {
+    margin-bottom: 50px;
+}
+
+.survey_header input {
+    width: 100%;
+    border-radius: 0;
+    border: 1px solid grey;
+}
+
+.survey_suggestion {
+    display: flex;
+    align-items: flex-end;
+}
+
+.survey_suggestion_field {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.survey_suggestion_quota {
+    display: flex;
+    flex-direction: column;
+    max-width: 60px;
+}
